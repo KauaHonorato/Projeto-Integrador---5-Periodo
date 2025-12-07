@@ -1,0 +1,16 @@
+.form-grid {
+    margin-top: 0.5rem;
+}
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.fadein {
+    animation-name: fadein;
+}
+@media screen and (max-width: 768px) {
+    ::ng-deep .p-timeline-event-content {
+        font-size: 0.9rem;
+    }
+}
