@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+  <div class="flex align-items-center gap-2 mb-4">
+    <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/caminhoes" pTooltip="Voltar"></button>
+    <h2 class="m-0">Novo Caminhão</h2>
+  </div>
+
+  <div class="p-fluid grid form-grid">
+    
+    <div class="field col-12 md:col-4">
+      <label for="placa">Placa do Veículo</label>
+      <input pInputText id="placa" [(ngModel)]="caminhao.placa" placeholder="Ex: ABC1234" maxlength="8" />
+      <small class="text-secondary">Formato Mercosul ou Antigo</small>
+    </div>
+
+    <div class="field col-12 md:col-8">
+      <label for="modelo">Modelo</label>
+      <input pInputText id="modelo" [(ngModel)]="caminhao.modelo" placeholder="Ex: Scania R450 / Volvo FH" />
+    </div>
+    <div class="field col-12 md:col-8">
+      <label for="motorista">Nome do Motorista</label>
+      <div class="p-input-icon-left">
+        <i class="pi pi-user"></i>
+        <input pInputText id="motorista" [(ngModel)]="caminhao.motorista" placeholder="Nome completo" />
+      </div>
+    </div>
+
+    <div class="field col-12 md:col-4">
+      <label for="capacidade">Capacidade (kg)</label>
+      <p-inputNumber id="capacidade" [(ngModel)]="caminhao.capacidadeCarga" mode="decimal" [min]="0" 
+                     suffix=" kg" placeholder="0"></p-inputNumber>
+    </div>
+
+    <div class="field col-12 md:col-8">
+      <label for="residuos">Tipos de Resíduos Suportados</label>
+      <p-multiSelect 
+        id="residuos"
+        [options]="tiposResiduoOptions" 
+        [(ngModel)]="caminhao.tiposResiduos" 
+        defaultLabel="Selecione os tipos..."
+        display="chip"
+        [showClear]="true">
+      </p-multiSelect>
+    </div>
+
+  </div>
+
+  <div class="flex justify-content-end gap-2 mt-4 pt-3 border-top-1 surface-border">
+    <button pButton label="Cancelar" class="p-button-outlined p-button-secondary" routerLink="/caminhoes"></button>
+    <button pButton label="Salvar Caminhão" icon="pi pi-check" (click)="salvar()" 
+            [loading]="loading" [disabled]="!caminhao.placa || !caminhao.modelo || !caminhao.motorista"></button>
+  </div>
+</div>

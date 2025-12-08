@@ -1,0 +1,35 @@
+<p-toast></p-toast>
+
+<div class="login-container">
+  <p-card header="GreenLog Solutions" [style]="{ width: '360px', textAlign: 'center' }">
+    <div class="p-fluid">
+      
+      <div class="field" style="margin-bottom: 1.5rem; text-align: left;">
+        <label for="username">Usuário</label>
+        <input id="username" 
+               type="text" 
+               pInputText 
+               [(ngModel)]="loginRequest.login" 
+               placeholder="Ex: admin" />
+      </div>
+
+      <div class="field" style="margin-bottom: 2rem; text-align: left;">
+        <label for="password">Senha</label>
+        <input id="password" 
+               type="password" 
+               pInputText 
+               [(ngModel)]="loginRequest.senha" 
+               placeholder="Ex: 123" 
+               (keydown.enter)="fazerLogin()" />
+      </div>
+
+      <button pButton 
+              label="Entrar" 
+              icon="pi pi-sign-in" 
+              [loading]="loading" 
+              (click)="fazerLogin()">
+      </button>
+    
+    </div>
+  </p-card>
+</div>

@@ -1,0 +1,143 @@
+<p-toast></p-toast>
+
+<div class="card" style="max-width: 1000px; margin: 0 auto;">
+  
+  <div class="flex align-items-center gap-2 mb-4">
+    <i class="pi pi-map text-primary text-2xl"></i>
+    <h2 class="m-0 text-primary">Cálculo de Rota Otimizada</h2>
+  </div>
+
+  <div class="p-fluid grid form-grid">
+    
+    <div class="col-12 md:col-6">
+      <div class="field">
+        <label class="font-bold">Tipo de Resíduo</label>
+        <p-dropdown [options]="tiposResiduoOptions" [(ngModel)]="form.tipoResiduo" 
+                    placeholder="Qual tipo de lixo?" (onChange)="aoSelecionarResiduo()">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="field">
+        <label class="font-bold">Caminhão Disponível</label>
+        <p-dropdown [options]="caminhoesFiltrados" [(ngModel)]="form.caminhao" optionLabel="placa" 
+                    placeholder="Selecione o veículo" [disabled]="!form.tipoResiduo"
+                    emptyMessage="Nenhum caminhão para este tipo de lixo">
+          <ng-template let-cam pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <span class="font-bold">{{ cam.placa }}</span>
+              <span class="text-sm text-500">({{ cam.motorista }})</span>
+            </div>
+          </ng-template>            
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="col-12">
+        <p-divider></p-divider>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="field">
+        <label class="font-bold">Ponto de Coleta (Origem)</label>
+        <p-dropdown [options]="pontosColetaFiltrados" [(ngModel)]="form.origem" optionLabel="nome" 
+                    placeholder="Selecione onde começar" [filter]="true" filterBy="nome" showClear="true"
+                    [disabled]="!form.tipoResiduo" >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="field">
+        <label class="font-bold">Ponto de Coleta (Destino)</label>
+        <p-dropdown [options]="pontosColetaFiltrados" [(ngModel)]="form.destino" optionLabel="nome" 
+                    placeholder="Selecione onde terminar" [filter]="true" filterBy="nome" showClear="true"
+                    [disabled]="!form.tipoResiduo" >
+        </p-dropdown>
+      </div>
+    </div>
+
+
+    <div class="col-12 flex justify-content-end mt-3">
+        <button pButton label="Calcular Rota" icon="pi pi-search" class="p-button-lg" 
+                (click)="calcularRota()" [loading]="carregando"></button>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="rotaCalculada" class="card mt-4 fadein animation-duration-500" style="max-width: 1000px; margin: 0 auto;">
+    
+    <div class="flex justify-content-between align-items-center border-bottom-1 surface-border pb-3 mb-3">
+        <div>
+            <h3 class="m-0">Resultado da Rota</h3>
+            <span class="text-500">ID do Cálculo: {{ rotaCalculada.id }}</span>
+        </div>
+        <p-tag severity="success" [value]="rotaCalculada.distanciaTotal?.toFixed(2) + ' Km'" class="text-xl"></p-tag>
+    </div>
+
+    <div class="grid">
+        <div class="col-12 md:col-4">
+            <div class="surface-100 p-3 border-round">
+                <p class="font-bold mb-1">Veículo</p>
+                <div class="text-xl">{{ rotaCalculada.caminhao?.placa }}</div>
+                <div class="text-500">{{ rotaCalculada.caminhao?.motorista }}</div>
+            </div>
+        </div>
+        <div class="col-12 md:col-4">
+            <div class="surface-100 p-3 border-round">
+                <p class="font-bold mb-1">Carga</p>
+                <div class="text-xl">{{ rotaCalculada.tipoResiduo }}</div>
+                <div class="text-500">Capacidade: {{ rotaCalculada.caminhao?.capacidadeCarga }}kg</div>
+            </div>
+        </div>
+        <div class="col-12 md:col-4">
+            <div class="surface-100 p-3 border-round">
+                <p class="font-bold mb-1">Status</p>
+                <div class="text-xl text-green-600">Otimizada <i class="pi pi-check-circle"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mt-5 mb-3">Itinerário (Sequência de Bairros)</h3>
+    
+    <p-timeline [value]="rotaCalculada.sequenciaBairros" layout="horizontal" align="top">
+        <ng-template pTemplate="content" let-bairro>
+            <div class="flex flex-column align-items-center">
+                <span class="font-bold text-primary">{{ bairro.nome }}</span>
+                <i class="pi pi-map-marker text-500 mt-1"></i>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="connector">
+            <div class="p-timeline-event-connector" style="background-color: var(--primary-color);"></div>
+        </ng-template>
+    </p-timeline>
+
+    <p-divider></p-divider>
+    <div class="flex justify-content-between align-items-end pt-3">
+        <div class="field">
+            <label for="dataAgendamento" class="font-bold">Agendar para o Dia:</label>
+            <p-calendar 
+                id="dataAgendamento" 
+                [(ngModel)]="form.dataAgendamento" 
+                [minDate]="dataMinima"
+                dateFormat="dd/mm/yy" 
+                placeholder="Selecione a data" 
+                [showIcon]="true"
+                appendTo="body"
+                [required]="true">
+            </p-calendar>
+        </div>
+        
+        <button pButton 
+                label="Agendar Rota" 
+                icon="pi pi-calendar-plus" 
+                class="p-button-success p-button-lg" 
+                [disabled]="!rotaCalculada || !form.dataAgendamento"
+                (click)="agendarRota()"
+                [loading]="carregando">
+        </button>
+    </div>
+    
+</div>

@@ -1,0 +1,26 @@
+<p-toast></p-toast>
+
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+  <div class="flex align-items-center gap-2 mb-4">
+    <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/bairros" pTooltip="Voltar"></button>
+    <h2 class="m-0">{{ isEdit ? 'Editar Bairro' : 'Novo Bairro' }}</h2>
+  </div>
+
+  <div class="p-fluid grid">
+    
+    <div class="field col-12">
+      <label for="nome" class="font-bold">Nome do Bairro</label>
+      <input pInputText id="nome" [(ngModel)]="bairro.nome" placeholder="Ex: Centro" required [disabled]="loading" />
+    </div>
+
+    <div *ngIf="isEdit" class="field col-12 text-500">
+        ID: {{ bairro.id }}
+    </div>
+
+  </div>
+
+  <div class="flex justify-content-end gap-2 mt-4 pt-3 border-top-1 surface-border">
+    <button pButton label="Cancelar" class="p-button-outlined p-button-secondary" routerLink="/bairros"></button>
+    <button pButton label="Salvar Bairro" icon="pi pi-check" (click)="salvar()" [loading]="loading" [disabled]="!bairro.nome"></button>
+  </div>
+</div>
