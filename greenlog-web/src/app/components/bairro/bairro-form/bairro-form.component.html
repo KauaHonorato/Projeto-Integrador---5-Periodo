@@ -1,0 +1,87 @@
+<p-toast></p-toast>
+
+<div class="card" style="max-width: 900px; margin: 0 auto;">
+  <div class="flex align-items-center gap-2 mb-4">
+    <button pButton icon="pi pi-arrow-left" class="p-button-text" routerLink="/bairros" pTooltip="Voltar"></button>
+    <h2 class="m-0">{{ isEdit ? 'Editar Bairro' : 'Novo Bairro' }}</h2>
+  </div>
+
+  <div class="p-fluid">
+    
+    <div class="field">
+      <label for="nome" class="font-bold">Nome do Bairro</label>
+      <input pInputText id="nome" [(ngModel)]="nomeBairro" placeholder="Ex: Centro" required [disabled]="loading" />
+    </div>
+
+    <p-divider></p-divider>
+
+    <h3 class="text-primary mt-0">Conexões (Ruas)</h3>
+    <p class="text-secondary mb-4">
+      Defina as distâncias para os bairros vizinhos. Pelo menos uma conexão é obrigatória.
+    </p>
+
+    <div *ngFor="let conexao of conexoes; let i = index" class="conexao-row fadein animation-duration-300">
+      
+      <div class="field col-3">
+        <label class="text-sm">Origem</label>
+        <div class="p-2 surface-100 border-round font-bold text-center">
+          {{ nomeBairro || '(Novo)' }}
+        </div>
+      </div>
+
+      <div class="col-1 text-center">
+        <i class="pi pi-arrow-right text-500"></i>
+      </div>
+
+      <div class="field col-4">
+        <label class="text-sm font-bold">Destino</label>
+        <p-dropdown 
+          [options]="listaBairros" 
+          [(ngModel)]="conexao.bairroDestinoId" 
+          optionLabel="nome" 
+          optionValue="id"
+          placeholder="Selecione o vizinho"
+          [filter]="true" 
+          filterBy="nome"
+          [disabled]="conexao.isExistente" 
+          appendTo="body">
+        </p-dropdown>
+        <small *ngIf="conexao.isExistente" class="text-orange-500">Destino fixo na edição</small>
+      </div>
+
+      <div class="field col-3">
+        <label class="text-sm font-bold">Distância (Km)</label>
+        <p-inputNumber 
+          [(ngModel)]="conexao.distanciaKm" 
+          mode="decimal" 
+          [minFractionDigits]="1" 
+          [maxFractionDigits]="2" 
+          suffix=" km"
+          [min]="0.1"
+          placeholder="0.0">
+        </p-inputNumber>
+      </div>
+
+      <div class="col-1">
+        <button pButton icon="pi pi-trash" 
+                class="p-button-danger p-button-text p-button-rounded" 
+                (click)="removerConexao(i)"
+                [disabled]="conexoes.length <= 1"
+                pTooltip="Remover" tooltipPosition="left">
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-content-center mt-3">
+      <button pButton type="button" label="Adicionar Conexão" icon="pi pi-plus" 
+              class="p-button-outlined" (click)="adicionarConexao()">
+      </button>
+    </div>
+
+  </div>
+
+  <div class="flex justify-content-end gap-2 mt-5 pt-3 border-top-1 surface-border">
+    <button pButton label="Cancelar" class="p-button-outlined p-button-secondary" routerLink="/bairros"></button>
+    <button pButton label="Salvar Bairro" icon="pi pi-check" (click)="salvar()" [loading]="loading"></button>
+  </div>
+</div>
