@@ -5,6 +5,14 @@ import com.greenLogBackend.greenLogSolution.dto.PontoColetaResponse;
 import com.greenLogBackend.greenLogSolution.entity.Bairro;
 import com.greenLogBackend.greenLogSolution.entity.PontoColeta;
 
+/**
+ * Padrão Adapter (Adaptador):
+ * Esta classe traduz (adapta) os dados entre duas interfaces incompatíveis:
+ * a Entidade de persistência (PontoColeta), focada no banco de dados, e o
+ * Objeto de Transferência (PontoColetaResponse/Request), focado na API.
+ * Permite que camadas distintas se comuniquem sem acoplamento direto.
+ */
+
 public final class PontoColetaMapper {
 
     private PontoColetaMapper() {}
@@ -43,4 +51,5 @@ public final class PontoColetaMapper {
                 pc.getBairro().getNome()
         );
     }
+
 }
