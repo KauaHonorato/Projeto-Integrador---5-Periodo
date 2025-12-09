@@ -27,23 +27,22 @@ public final class ItinerarioMapper {
         Rota rota = it.getRota();
         Caminhao caminhao = it.getCaminhao();
 
-        // Mapeia a lista de Bairro (Entity) para BairroResponse (DTO)
         List<BairroResponse> sequenciaBairrosResponse = rota.getSequenciaBairros().stream()
                 .map(BairroMapper::toResponse)
                 .collect(Collectors.toList());
 
-        // Retorna o response completo, extraindo todos os dados aninhados
         return new ItinerarioResponse(
                 it.getId(),
                 it.getData(),
-                "AGENDADO", // Status fixo como "AGENDADO" para novos itinerários (o frontend fará a conversão)
+                "AGENDADO", 
                 rota.getId(),
                 rota.getDistanciaTotal(),
                 rota.getTipoResiduo(),
                 sequenciaBairrosResponse,
                 caminhao.getId(),
                 caminhao.getPlaca(),
-                caminhao.getMotorista() // Adicionado Motorista
+                caminhao.getMotorista() 
         );
     }
+
 }
