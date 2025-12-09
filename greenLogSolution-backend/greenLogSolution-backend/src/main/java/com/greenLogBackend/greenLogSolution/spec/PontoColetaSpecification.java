@@ -5,6 +5,14 @@ import com.greenLogBackend.greenLogSolution.enums.TipoResiduo;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Padrão Strategy
+ * Encapsula algoritmos de consulta (filtros) em classes separadas.
+ * Permite que diferentes critérios de busca (por nome, bairro, tipo de resíduo)
+ * sejam selecionados e combinados dinamicamente em tempo de execução, sem
+ * alterar a estrutura do repositório ou da entidade.
+ */
+
 public class PontoColetaSpecification implements Specification<PontoColeta> {
 
     private final String key;
@@ -40,4 +48,5 @@ public class PontoColetaSpecification implements Specification<PontoColeta> {
                 return null;
         }
     }
+
 }
