@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pontos-coleta")
-// @CrossOrigin("*") // Configurar via SecurityConfig é mais seguro, mas mantive comentado se precisar rápido
 public class PontoColetaController {
 
     private final PontoColetaService pontoColetaService;
@@ -47,4 +46,5 @@ public class PontoColetaController {
         pontoColetaService.deletarPonto(id);
         return ResponseEntity.noContent().build();
     }
+
 }
