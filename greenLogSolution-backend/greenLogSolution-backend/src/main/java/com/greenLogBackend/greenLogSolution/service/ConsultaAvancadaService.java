@@ -24,7 +24,7 @@ public class ConsultaAvancadaService {
 
 
         Pattern pattern = Pattern.compile("(\\w+(\\.\\w+)?)\\s*(=|:)\\s*\"([^\"]+)\"");
-        Matcher matcher = pattern.matcher(comando + ","); // Hackzinho para fechar o loop se tiver multiplos
+        Matcher matcher = pattern.matcher(comando + ","); 
 
         while (matcher.find()) {
             String key = matcher.group(1);
@@ -37,4 +37,5 @@ public class ConsultaAvancadaService {
 
         return repository.findAll(spec);
     }
+
 }
