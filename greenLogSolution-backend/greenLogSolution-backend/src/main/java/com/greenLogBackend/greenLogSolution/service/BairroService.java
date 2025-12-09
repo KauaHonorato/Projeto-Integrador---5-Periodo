@@ -37,7 +37,6 @@ public class BairroService {
     public List<BairroResponse> listarTodos() {
         return bairroRepository.findAll().stream()
                 .map(b -> {
-                    // Agora o 'emUso' (para bloquear o botão) é APENAS se tiver Ponto de Coleta
                     boolean emUso = pontoColetaRepository.existsByBairroId(b.getId());
                     return BairroMapper.toResponse(b, emUso);
                 })
@@ -132,4 +131,5 @@ public class BairroService {
     public boolean existePorId(Long id) {
         return bairroRepository.existsById(id);
     }
+
 }
