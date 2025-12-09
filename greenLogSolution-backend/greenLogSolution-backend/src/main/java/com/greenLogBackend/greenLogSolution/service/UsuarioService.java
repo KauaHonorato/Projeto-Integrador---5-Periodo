@@ -5,7 +5,7 @@ import com.greenLogBackend.greenLogSolution.dto.UsuarioResponse;
 import com.greenLogBackend.greenLogSolution.entity.Usuario;
 import com.greenLogBackend.greenLogSolution.mapper.UsuarioMapper;
 import com.greenLogBackend.greenLogSolution.repository.UsuarioRepository;
-import com.greenLogBackend.greenLogSolution.exception.BusinessException; // Assegure-se de que essa exceção existe
+import com.greenLogBackend.greenLogSolution.exception.BusinessException; 
 import com.greenLogBackend.greenLogSolution.exception.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,4 +62,5 @@ public class UsuarioService {
         }
         usuarioRepository.deleteById(id);
     }
+
 }
