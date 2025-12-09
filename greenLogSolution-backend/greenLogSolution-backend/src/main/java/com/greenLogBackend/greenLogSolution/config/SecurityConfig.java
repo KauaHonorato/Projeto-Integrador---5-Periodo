@@ -62,22 +62,13 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        // Permite acesso público ao console H2 e documentação Swagger
                         .requestMatchers("/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-
-                        // !!! IMPORTANTE: Permite acesso público ao Login e Registro !!!
                         .requestMatchers("/api/auth/**").permitAll()
-
-                        // Endpoints Administrativos
                         .requestMatchers(HttpMethod.POST, "/api/caminhoes/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/caminhoes/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/pontos-coleta/**").hasAuthority("ROLE_ADMIN")
-
-                        // Endpoints de Operação
                         .requestMatchers("/api/rotas/calcular").hasAnyAuthority("ROLE_ADMIN", "ROLE_GESTOR")
                         .requestMatchers("/api/itinerarios/agendar").hasAnyAuthority("ROLE_ADMIN", "ROLE_GESTOR")
-
-                        // Qualquer outra requisição precisa estar autenticada
                         .anyRequest().authenticated()
                 );
 
@@ -87,7 +78,6 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Permite o Frontend Angular (ajuste a porta se necessário)
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "x-auth-token"));
@@ -97,4 +87,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
