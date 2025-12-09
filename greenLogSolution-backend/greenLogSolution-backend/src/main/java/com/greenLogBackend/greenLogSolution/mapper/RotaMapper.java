@@ -23,7 +23,7 @@ public final class RotaMapper {
     public static RotaResponse toResponse(Rota rota) {
         return new RotaResponse(
                 rota.getId(),
-                CaminhaoMapper.toResponse(rota.getCaminhao()), // <--- NOVO MAPEARMENTO: Usa CaminhaoMapper
+                CaminhaoMapper.toResponse(rota.getCaminhao()), 
                 rota.getDistanciaTotal(),
                 rota.getTipoResiduo(),
                 rota.getSequenciaBairros().stream()
@@ -31,4 +31,5 @@ public final class RotaMapper {
                         .toList()
         );
     }
+
 }
