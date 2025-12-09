@@ -3,10 +3,10 @@
 
 
 ## Integrantes do grupo
-## Kaua Honorato
-## Pedro Assumpção
-## Rayssa Alves
-## Wagner Gomes
+Kaua Honorato
+Pedro Assumpção
+Rayssa Alves
+Wagner Gomes
 
 
 ### Visão Geral
