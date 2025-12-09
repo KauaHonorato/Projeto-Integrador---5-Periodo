@@ -1,6 +1,6 @@
 package com.greenLogBackend.greenLogSolution.controller;
 
-import com.greenLogBackend.greenLogSolution.dto.LoginRequest; // Importe o novo DTO
+import com.greenLogBackend.greenLogSolution.dto.LoginRequest; 
 import com.greenLogBackend.greenLogSolution.dto.UsuarioRequest;
 import com.greenLogBackend.greenLogSolution.dto.UsuarioResponse;
 import com.greenLogBackend.greenLogSolution.service.UsuarioService;
@@ -47,4 +47,5 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha na autenticação: Credenciais inválidas.");
         }
     }
+
 }
