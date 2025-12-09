@@ -11,6 +11,7 @@ public record BairroRequest(
         String nome,
 
         @NotEmpty(message = "É necessário adicionar pelo menos uma conexão (rua) a outro bairro")
-        @Valid // Valida cada item da lista (ConexaoRequest)
+        @Valid 
         List<ConexaoRequest> conexoes
+
 ) {}
