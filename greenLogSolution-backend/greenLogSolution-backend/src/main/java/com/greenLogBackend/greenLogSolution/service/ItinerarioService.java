@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ItinerarioService {
 
     private final ItinerarioRepository itinerarioRepository;
-    private final RotaRepository rotaRepository; // Acesso direto ao repo para pegar a Entidade Rota
+    private final RotaRepository rotaRepository; 
 
     public ItinerarioService(ItinerarioRepository itinerarioRepository, RotaRepository rotaRepository) {
         this.itinerarioRepository = itinerarioRepository;
@@ -53,4 +53,5 @@ public class ItinerarioService {
         Itinerario salvo = itinerarioRepository.save(itinerario);
         return ItinerarioMapper.toResponse(salvo);
     }
+
 }
