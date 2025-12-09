@@ -22,7 +22,7 @@ public class Caminhao {
 
     @NotBlank(message = "O modelo é obrigatório")
     @Column(nullable = false)
-    private String modelo; // ADICIONADO: Importante para identificar o veículo
+    private String modelo; 
 
     @NotBlank(message = "O motorista é obrigatório")
     @Column(nullable = false)
@@ -47,7 +47,6 @@ public class Caminhao {
         if (motorista != null) motorista = motorista.trim();
     }
 
-    // Getters e Setters OBRIGATÓRIOS para o Mapper funcionar
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -65,4 +64,5 @@ public class Caminhao {
 
     public Set<TipoResiduo> getTiposResiduos() { return tiposResiduos; }
     public void setTiposResiduos(Set<TipoResiduo> tiposResiduos) { this.tiposResiduos = tiposResiduos; }
+
 }
