@@ -28,22 +28,14 @@ public class PontoColetaService {
 
     @Transactional
     public PontoColetaResponse criarPonto(PontoColetaRequest request) {
-        // 1. Validação de Nome Único (com trim para evitar erros de espaço)
         if (pontoColetaRepository.existsByNome(request.nome().trim())) {
             throw new BusinessException("Já existe um ponto de coleta com o nome '" + request.nome() + "'.");
         }
-
-        // 2. Busca a dependência (Bairro) pelo ID informado no DTO
+        
         Bairro bairro = bairroRepository.findById(request.bairroId())
                 .orElseThrow(() -> new ResourceNotFoundException("Bairro não encontrado com id: " + request.bairroId()));
-
-        // 3. Converte DTO -> Entidade usando o Bairro recuperado
         PontoColeta ponto = PontoColetaMapper.toEntity(request, bairro);
-
-        // 4. Salva no banco
         PontoColeta pontoSalvo = pontoColetaRepository.save(ponto);
-
-        // 5. Retorna o DTO de Resposta
         return PontoColetaMapper.toResponse(pontoSalvo);
     }
 
@@ -66,7 +58,6 @@ public class PontoColetaService {
         PontoColeta pontoExistente = pontoColetaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ponto de Coleta não encontrado com id: " + id));
 
-        // Validação: Se o nome mudou, verifica se o novo nome já existe (com trim)
         if (!pontoExistente.getNome().equalsIgnoreCase(request.nome().trim()) &&
                 pontoColetaRepository.existsByNome(request.nome().trim())) {
             throw new BusinessException("Já existe outro ponto de coleta com o nome '" + request.nome() + "'.");
@@ -74,8 +65,7 @@ public class PontoColetaService {
 
         Bairro bairro = bairroRepository.findById(request.bairroId())
                 .orElseThrow(() -> new ResourceNotFoundException("Bairro não encontrado com id: " + request.bairroId()));
-
-        // Atualiza a entidade existente com os dados do DTO
+        
         PontoColetaMapper.copyToEntity(request, pontoExistente, bairro);
 
         PontoColeta pontoAtualizado = pontoColetaRepository.save(pontoExistente);
@@ -89,4 +79,5 @@ public class PontoColetaService {
         }
         pontoColetaRepository.deleteById(id);
     }
+
 }
