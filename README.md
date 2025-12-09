@@ -71,7 +71,7 @@ Crie uma base de dados com o nome `greenlog_db` antes de iniciar o backend. O Sp
 
 2.  Instale as dependências:
     ```bash
-    npm install
+    npm install primeng@17.18.0 primeicons primeflex --legacy-peer-deps
     ```
 
 3.  Inicie o servidor de desenvolvimento:
