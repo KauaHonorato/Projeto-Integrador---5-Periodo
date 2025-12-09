@@ -1,6 +1,14 @@
 
 ## GreenLog Solutions
 
+
+## Integrantes do grupo
+## Kaua Honorato
+## Pedro Assumpção
+## Rayssa Alves
+## Wagner Gomes
+
+
 ### Visão Geral
 
 Este projeto é composto por dois módulos principais:
