@@ -29,7 +29,6 @@ public class PontoColeta {
     @Column(nullable = false)
     private String responsavel;
 
-    // REGEX EXIGIDA (Linguagens Formais) - Validação de CPF simples (apenas números)
     @NotBlank(message = "O CPF do responsável é obrigatório")
     @Pattern(regexp = "^\\d{11}$", message = "O CPF deve conter apenas 11 dígitos numéricos")
     @Column(nullable = false, length = 11)
@@ -53,7 +52,7 @@ public class PontoColeta {
     @PreUpdate
     private void normalize() {
         if (nome != null) nome = nome.trim();
-        if (cpfResponsavel != null) cpfResponsavel = cpfResponsavel.replaceAll("\\D", ""); // Remove formatação
+        if (cpfResponsavel != null) cpfResponsavel = cpfResponsavel.replaceAll("\\D", ""); 
     }
 
     public Long getId() { return id; }
@@ -73,3 +72,4 @@ public class PontoColeta {
     public Bairro getBairro() { return bairro; }
     public void setBairro(Bairro bairro) { this.bairro = bairro; }
 }
+
