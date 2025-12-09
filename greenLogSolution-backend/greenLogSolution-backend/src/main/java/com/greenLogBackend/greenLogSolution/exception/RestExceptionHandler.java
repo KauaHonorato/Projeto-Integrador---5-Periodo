@@ -67,7 +67,7 @@ public class RestExceptionHandler {
     public ResponseEntity<ApiError> handleBusinessException(BusinessException ex, HttpServletRequest request) {
         ApiError apiError = new ApiError(
                 LocalDateTime.now(),
-                HttpStatus.UNPROCESSABLE_ENTITY.value(), // 422 é ideal para regras de negócio, mas 400 também serve
+                HttpStatus.UNPROCESSABLE_ENTITY.value(), 
                 "Regra de Negócio",
                 ex.getMessage(),
                 request.getRequestURI()
@@ -91,7 +91,6 @@ public class RestExceptionHandler {
     public ResponseEntity<ApiError> handleDataIntegrity(DataIntegrityViolationException ex, HttpServletRequest request) {
         String mensagem = "Operação viola integridade de dados.";
 
-        // Pega a mensagem mais específica da exceção (vinda do driver do banco)
         String detalhe = ex.getMostSpecificCause().getMessage();
 
         if (detalhe != null) {
@@ -128,4 +127,5 @@ public class RestExceptionHandler {
         ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
+
 }
